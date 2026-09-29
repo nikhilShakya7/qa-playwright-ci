@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,6 +31,10 @@ jobs:
 
       - name: Run playwright tests
         run: npx playwright test
+
+      - name: Test failture message
+        if: failure()
+        run: echo "Playwright tests failed. Please check the report for details."
 
       - name: Upload report
         if: always()
